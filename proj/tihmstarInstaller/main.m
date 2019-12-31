@@ -7,40 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <spawn.h>
 #include <pwd.h>
+#include <spawn.h>
 
-
-
-
-void InstallTihmstarDepends(char *name_of_file){
-    
+void InstallTihmstarDepends(char *name_of_file) {
     extern char **environ;
     pid_t pid;
     char *argv[] = {
         "/usr/local/bin/brew",
         "install",
         name_of_file,
-        NULL
-    };
-
+        NULL};
+    
     posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
     waitpid(pid, NULL, 0);
-    
-    
 }
 
-
-
-void InstallDepends(char *name_of_file){
-    
-    
+void InstallDepends(char *name_of_file) {
     InstallTihmstarDepends(name_of_file);
     printf("Done!\n");
-    
 }
-
-
 
 int main() {
     @autoreleasepool {
@@ -53,7 +39,7 @@ int main() {
         sleep(1);
         
         printf("Installing! Please Wait!\n");
-
+        
         InstallDepends("ack");
         InstallDepends("atk");
         InstallDepends("autoconf");
@@ -152,7 +138,6 @@ int main() {
         printf("Fully installed!\nYou no-longer need to run this script!\n");
         
         printf("Now to compile, lets say img4tool, run\n./autogen.sh\nmake\nsudo make install\n");
-
     }
     return 0;
 }
