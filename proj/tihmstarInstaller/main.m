@@ -1,16 +1,7 @@
-//
-//  main.m
-//  tihmstarInstaller
-//
-//  Created by Brandon Plank on 12/30/19.
-//  Copyright © 2019 Brandon Plank. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #include <pwd.h>
 #include <spawn.h>
-
-void InstallTihmstarDepends(char *name_of_file) {
+void InstallDepends(char *name_of_file) {
     extern char **environ;
     pid_t pid;
     char *argv[] = {
@@ -21,13 +12,8 @@ void InstallTihmstarDepends(char *name_of_file) {
     
     posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
     waitpid(pid, NULL, 0);
-}
-
-void InstallDepends(char *name_of_file) {
-    InstallTihmstarDepends(name_of_file);
     printf("Done!\n");
 }
-
 int main() {
     @autoreleasepool {
         // insert code here...
@@ -134,9 +120,7 @@ int main() {
         InstallDepends("tcptrace");
         InstallDepends("ucspi-tcp");
         InstallDepends("xz");
-        
         printf("Fully installed!\nYou no-longer need to run this script!\n");
-        
         printf("Now to compile, lets say img4tool, run\n./autogen.sh\nmake\nsudo make install\n");
     }
     return 0;
